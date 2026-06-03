@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="HELIX Soft targets and weights">
+  <rect x="4" y="4" width="120" height="120" rx="26" fill="#00876c"/>
+  <rect x="10" y="10" width="108" height="108" rx="22" fill="none" stroke="#d8fff5" stroke-width="3" opacity="0.75"/>
+  <g stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M64 18l39 16v28c0 27-16 45-39 52-23-7-39-25-39-52V34z"/>
+    <circle cx="48" cy="64" r="8"/>
+    <circle cx="80" cy="54" r="8"/>
+    <circle cx="72" cy="84" r="8"/>
+    <path d="M56 68l10 10 25-34"/>
+  </g>
+</svg>

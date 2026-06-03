@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HELIX Labelling Framework – User Guide</title>
+<style>
+:root{--kit:#00876c;--kit2:#006b57;--ink:#17212b;--muted:#5b6875;--line:#d8e1e8;--soft:#f5f8fa;--ok:#eaf7f2;--warn:#fff4d6;--bad:#ffecec;--code:#f2f4f7;}
+html{scroll-behavior:smooth}body{font-family:Segoe UI,Roboto,Arial,sans-serif;line-height:1.55;color:var(--ink);margin:0;background:white}header{background:linear-gradient(135deg,var(--kit2),var(--kit));color:#fff;padding:34px 42px;border-bottom:5px solid #d7efea}header h1{margin:0;font-size:32px}header p{margin:.45rem 0 0;font-size:17px;max-width:1100px}.small{font-size:13px;color:var(--muted)}header .small{color:#d9fff5}main{display:grid;grid-template-columns:285px minmax(0,1fr);gap:28px;max-width:1320px;margin:0 auto;padding:26px 32px 60px}nav{position:sticky;top:12px;align-self:start;border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;box-shadow:0 2px 14px rgba(0,0,0,.04)}nav h2{font-size:15px;margin:0 0 8px}nav a{display:block;color:#1d4f45;text-decoration:none;padding:5px 2px;font-size:14px}nav a:hover{text-decoration:underline}.content{min-width:0}h2{font-size:26px;margin:34px 0 12px;border-bottom:2px solid var(--line);padding-bottom:6px}h3{font-size:20px;margin:28px 0 10px;color:#014d42}h4{font-size:16px;margin:18px 0 6px;color:#233}p{margin:9px 0}.card{border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:15px 0;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.035)}.note{background:var(--ok);border-left:5px solid var(--kit)}.warn{background:var(--warn);border-left:5px solid #e5a500}.danger{background:var(--bad);border-left:5px solid #d33}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.tag{display:inline-block;background:#e3f3ef;border:1px solid #bde5db;color:#005d4b;border-radius:999px;padding:2px 9px;font-size:12px;margin-right:5px}table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:14px}th,td{border:1px solid var(--line);padding:8px 10px;vertical-align:top}th{background:#edf5f3;text-align:left}tr:nth-child(even) td{background:#fbfcfd}code,pre{font-family:Consolas,Menlo,monospace;background:var(--code);border-radius:6px}code{padding:1px 5px}pre{padding:12px;overflow:auto;border:1px solid #dde3ea}.formula{font-family:Cambria,Georgia,serif;background:#fafafa;border:1px solid var(--line);padding:10px 12px;border-radius:10px}.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.box{border:1px solid #b7d9d2;background:#f7fffd;border-radius:12px;padding:8px 10px}.arrow{font-weight:bold;color:#006b57}@media(max-width:900px){main{display:block;padding:20px}nav{position:static;margin-bottom:20px}header{padding:26px 22px}table{font-size:13px}}@media print{nav{display:none}main{display:block;max-width:none;padding:0 20px}header{background:white;color:black;border-bottom:1px solid #aaa}.card{box-shadow:none}header .small{color:#333}}
+</style>
+</head>
+<body>
+<header>
+<h1>HELIX Labelling Framework – Detailed User Guide</h1>
+<p>Modular QGIS toolbox for preparing heterogeneous Earth Observation labels as EO-grid-aligned, time-aware, context-aware, uncertainty-aware, ML/AI-ready supervision.</p>
+<p class="small">Version 1.0.0 · QGIS 3.34+ / QGIS 4.x · User-facing HTML guide</p>
+</header>
+<main>
+<nav>
+<h2>Contents</h2>
+<a href="#concept">Core concept</a>
+<a href="#workflow">Typical workflows</a>
+<a href="#schema">Class schema and string classes</a>
+<a href="#modules">Module overview</a>
+<a href="#spatial">2 Spatial reconstruction</a>
+<a href="#temporal">3 Temporal reconciliation</a>
+<a href="#helical">4 Helical / wave features</a>
+<a href="#context">5 Context & risk</a>
+<a href="#ust">6 Soft targets & weights</a>
+<a href="#units">Units and conventions</a>
+<a href="#outputs">Output naming</a>
+<a href="#faq">Troubleshooting</a>
+</nav>
+<section class="content">
+<h2 id="concept">Core concept</h2>
+<p>HELIX Labelling Framework does not treat labels as perfect, timeless, isolated class values. It prepares label information so that it can be used consistently with Earth Observation feature grids and with machine-learning training pipelines.</p>
+<div class="flow"><span class="box">Preflight</span><span class="arrow">→</span><span class="box">Spatial reconstruction</span><span class="arrow">→</span><span class="box">Temporal reconciliation</span><span class="arrow">→</span><span class="box">Helical features</span><span class="arrow">→</span><span class="box">Context risk</span><span class="arrow">→</span><span class="box">Soft targets & weights</span><span class="arrow">→</span><span class="box">Export</span></div>
+<p>Each module can run independently. A simple task can stop after Spatial reconstruction. A richer workflow can continue with context features, temporal matching, helical time features and UST outputs.</p>
+<div class="card note"><strong>HELIX uncertainty is label/context/temporal supervision uncertainty.</strong> It can use label ambiguity, source agreement, boundary risk, temporal quality and quality priors. EO data quality masks can be added separately as feature-side reliability layers, but they are not the same as label uncertainty.</div>
+
+<h2 id="workflow">Typical workflows</h2>
+<table>
+<tr><th>I want to...</th><th>Use this module</th><th>Default output</th></tr>
+<tr><td>Inspect available class fields and class values.</td><td>Preflight & class schema</td><td><code>helix_class_schema.csv</code> and <code>.json</code></td></tr>
+<tr><td>Align vector or raster labels to an EO grid.</td><td>Spatial reconstruction</td><td><code>helix_label_hard.tif</code></td></tr>
+<tr><td>Use multiple label sources and inspect agreement.</td><td>Spatial reconstruction with optional stacks</td><td>hard label + optional source/agreement/probability stacks</td></tr>
+<tr><td>Match labels to EO dates.</td><td>Temporal reconciliation</td><td>match table and report</td></tr>
+<tr><td>Create seasonal/cyclic date features.</td><td>Helical / wave features</td><td>CSV and optional raster feature stacks</td></tr>
+<tr><td>Create boundary and neighbourhood risk layers.</td><td>Context & risk features</td><td>edge, diversity, entropy, margin, local purity</td></tr>
+<tr><td>Create ML-ready soft supervision.</td><td>Soft targets & weights</td><td>soft targets, uncertainty, training weights</td></tr>
+</table>
+
+<h2 id="schema">Class schema and string classes</h2>
+<p>GeoTIFF class rasters store numeric values. If a vector class field contains strings such as <code>building</code>, <code>tree</code> or <code>water</code>, HELIX maps them automatically to stable integer class IDs before rasterisation.</p>
+<pre>class_id,class_name,source_value,source_type,include,merge_to,priority,quality_q
+1,building,building,vector,1,1,1.0,1.0
+2,tree,tree,vector,1,2,1.0,1.0
+3,water,water,vector,1,3,1.0,1.0</pre>
+<p>The one-band hard label raster then stores values <code>1</code>, <code>2</code>, <code>3</code>. The schema stores the meaning of those values. Context, UST and Export can read the schema to preserve class names and band descriptions.</p>
+<table>
+<tr><th>Column</th><th>Meaning</th></tr>
+<tr><td><code>class_id</code></td><td>Integer value used in hard label rasters and stack band order.</td></tr>
+<tr><td><code>class_name</code></td><td>Readable class name for reports and band descriptions.</td></tr>
+<tr><td><code>source_value</code></td><td>Original attribute value from the vector layer or numeric raster value.</td></tr>
+<tr><td><code>include</code></td><td>1 = use class, 0 = exclude class.</td></tr>
+<tr><td><code>merge_to</code></td><td>Optional target class ID for class merging.</td></tr>
+<tr><td><code>priority</code></td><td>Reserved source/class priority field for advanced fusion.</td></tr>
+<tr><td><code>quality_q</code></td><td>Class/source quality prior that can be used by UST workflows.</td></tr>
+</table>
+
+<h2 id="modules">Module overview</h2>
+<table>
+<tr><th>Module</th><th>Main task</th><th>Can run alone?</th><th>Advanced outputs</th></tr>
+<tr><td>1 Preflight & class schema</td><td>Inspect CRS, fields, raster metadata and class values.</td><td>Yes</td><td>CSV/JSON class schema, HTML report.</td></tr>
+<tr><td>2 Spatial reconstruction</td><td>Align labels to the EO/reference grid.</td><td>Yes</td><td>One-hot class stack, probability/support stack, source stack, coverage, agreement, purity.</td></tr>
+<tr><td>3 Temporal reconciliation</td><td>Match EO dates to label snapshots or validity windows.</td><td>Yes</td><td>Tolerance, backtracking, nearest/previous/next/static/valid-window matching.</td></tr>
+<tr><td>4 Helical / wave features</td><td>Represent seasonal time as cyclic features.</td><td>Yes</td><td>Fourier harmonics, in-between dates, class × helical interactions.</td></tr>
+<tr><td>5 Context & risk</td><td>Describe spatial ambiguity and neighbourhood structure.</td><td>Yes</td><td>Multi-radius per-class support, local purity, and optional class-pair context.</td></tr>
+<tr><td>6 Soft targets & weights</td><td>Create UST: soft labels, uncertainty, weights.</td><td>Yes</td><td>Per-class confidence, uncertainty and weights.</td></tr>
+<tr><td>7 Export & report</td><td>Bundle outputs and metadata.</td><td>Yes</td><td>File copy bundle and raster statistics.</td></tr>
+</table>
+
+<h2 id="spatial">2 Spatial reconstruction</h2>
+<p>Spatial reconstruction aligns vector and raster label sources to the selected EO/reference grid. The reference grid defines CRS, pixel size, extent, alignment and NoData logic.</p>
+<h3>Default output</h3>
+<p>The default output is a single-band hard class-ID raster:</p>
+<pre>helix_label_hard.tif
+pixel value = class ID</pre>
+<p>One band can contain many classes. For example, values 1–10 represent ten different classes.</p>
+<h3>Optional stack outputs</h3>
+<table>
+<tr><th>Output</th><th>Band logic</th><th>Use</th></tr>
+<tr><td><code>helix_spatial_class_stack.tif</code></td><td>one band per class, one-hot 0/1</td><td>Class-wise context, ML stack workflows.</td></tr>
+<tr><td><code>helix_spatial_probabilities.tif</code></td><td>one band per class, source-vote/support fraction; weighted fusion can use schema priority × quality_q</td><td>Soft supervision and ambiguity analysis.</td></tr>
+<tr><td><code>helix_spatial_source_labels.tif</code></td><td>one band per input source</td><td>Audit multiple sources and source disagreement.</td></tr>
+<tr><td><code>helix_spatial_source_agreement.tif</code></td><td>one global band</td><td>UST source-risk input.</td></tr>
+<tr><td><code>helix_spatial_purity.tif</code></td><td>one global band</td><td>Top-class dominance/support.</td></tr>
+</table>
+<p>Use the primary vector layer when you want QGIS field dropdowns. Additional vector layers are supported in the advanced section. If the selected class field contains strings, HELIX writes the string-to-ID mapping to the schema and avoids collisions with numeric class IDs. Raster source values can also be remapped through schema source_value → class_id rows.</p>
+
+<h2 id="temporal">3 Temporal reconciliation</h2>
+<p>Temporal reconciliation links EO acquisition dates with label snapshots or validity windows. This avoids pretending that all labels are valid at all times.</p>
+<table><tr><th>Concept</th><th>Meaning</th></tr><tr><td>Nearest label</td><td>Use the closest available label date.</td></tr><tr><td>Previous valid label</td><td>Use the latest earlier label.</td></tr><tr><td>Validity window</td><td>Use the label only inside valid-from/valid-to dates.</td></tr><tr><td>Backtracking</td><td>Allow previous labels to remain valid for a controlled number of days.</td></tr><tr><td>Temporal quality</td><td>A quality signal that can reduce UST weights when temporal mismatch is high.</td></tr></table>
+
+<h2 id="helical">4 Helical / wave features</h2>
+<p>Helical features encode cyclic time. Instead of using day-of-year as a linear number, HELIX represents seasonal position with sine/cosine waves:</p>
+<div class="formula">sin(2π · DOY / year_length), cos(2π · DOY / year_length)</div>
+<p>Additional harmonics represent annual, semi-annual and shorter seasonal cycles. The term “helical” reflects cyclic seasonal repetition combined with forward movement through time.</p>
+<p>By default, helical outputs are date/feature bands, not class bands. In advanced mode, HELIX can multiply class/soft-target bands by helical features to create class × time interaction stacks for research workflows. If no class/soft-target stack is available, a single-band hard class-ID raster can be provided and HELIX one-hot encodes it internally.</p>
+
+<h2 id="context">5 Context & risk features</h2>
+<p>Context describes whether a label is spatially clear or ambiguous. A clean polygon interior is different from a mixed boundary pixel.</p>
+<table><tr><th>Output</th><th>Meaning</th></tr><tr><td><code>helix_context_edge_risk.tif</code></td><td>Boundary/mixed-pixel risk using the main radius.</td></tr><tr><td><code>helix_context_diversity.tif</code></td><td>How often neighbouring pixels differ from the centre class.</td></tr><tr><td><code>helix_context_entropy.tif</code></td><td>Entropy of class probabilities/support.</td></tr><tr><td><code>helix_context_margin.tif</code></td><td>Difference between highest and second-highest class support.</td></tr><tr><td><code>helix_context_class_support_multiradius.tif</code></td><td>Optional one band per class and radius with local neighbourhood support.</td></tr><tr><td><code>helix_context_local_purity_multiradius.tif</code></td><td>One purity/dominance band per radius.</td></tr><tr><td><code>helix_context_class_pair_context.tif</code></td><td>Optional ordered class-pair context, e.g. class A near class B.</td></tr></table>
+<div class="card note"><strong>Hard-label input works directly.</strong> A single-band hard class raster with ten class IDs can produce ten class-support bands per radius. A probability or soft-target stack can also be used directly for soft context.</div>
+
+<h2 id="ust">6 Soft targets & weights (UST)</h2>
+<p>UST means <strong>Uncertainty-aware Supervision Target</strong>. It creates ML-ready supervision that does not force every pixel to be treated as perfectly certain.</p>
+<table><tr><th>Product</th><th>Band logic</th><th>Meaning</th></tr><tr><td><code>helix_soft_targets.tif</code></td><td>one band per class</td><td>Probabilistic training target.</td></tr><tr><td><code>helix_uncertainty.tif</code></td><td>one global band</td><td>Overall per-pixel uncertainty.</td></tr><tr><td><code>helix_training_weights.tif</code></td><td>one global band</td><td>How strongly the pixel should influence training.</td></tr><tr><td><code>helix_class_confidence.tif</code></td><td>optional one band per class</td><td>Class-wise confidence.</td></tr><tr><td><code>helix_class_uncertainty.tif</code></td><td>optional one band per class</td><td>Class-wise uncertainty diagnostics.</td></tr><tr><td><code>helix_class_weights.tif</code></td><td>optional one band per class</td><td>Class-wise weighted target support.</td></tr></table>
+<div class="formula">alpha = alpha_base + beta_edge · edge_risk + beta_temporal · temporal_risk + beta_source · source_risk + beta_context · context_risk</div>
+<p>The soft target is formed by smoothing the hard/probability label using <code>alpha</code>. Overall weights decrease when uncertainty, edge risk, temporal risk, source disagreement, temporal mismatch or context ambiguity increase. If a class schema provides quality_q values, they reduce effective Q and per-class confidence/weights.</p>
+
+<h2 id="units">Units and conventions</h2>
+<table><tr><th>Quantity</th><th>Unit / convention</th></tr><tr><td>CRS, extent, pixel size</td><td>Inherited from the EO/reference grid.</td></tr><tr><td>Neighbourhood radius</td><td>Pixels.</td></tr><tr><td>Temporal tolerance/backtracking</td><td>Days.</td></tr><tr><td>Probabilities, purity, agreement, uncertainty, Q</td><td>Usually 0–1.</td></tr><tr><td>Edge risk</td><td>0–100 byte raster or normalized 0–1 internally.</td></tr><tr><td>Hard labels</td><td>Integer class IDs in one raster band.</td></tr><tr><td>Soft/probability/class stacks</td><td>One band per class, ordered by the class schema or class ID list.</td></tr></table>
+
+<h2 id="outputs">Output naming</h2>
+<table><tr><th>File</th><th>Module</th><th>Meaning</th></tr><tr><td><code>helix_class_schema.csv/json</code></td><td>Preflight / Spatial</td><td>Mapping from source class values to integer IDs and names.</td></tr><tr><td><code>helix_label_hard.tif</code></td><td>Spatial</td><td>Single-band class-ID raster.</td></tr><tr><td><code>helix_spatial_class_stack.tif</code></td><td>Spatial optional</td><td>One-hot class stack.</td></tr><tr><td><code>helix_spatial_probabilities.tif</code></td><td>Spatial optional</td><td>Class support/probability stack.</td></tr><tr><td><code>helix_context_class_support_multiradius.tif</code></td><td>Context optional</td><td>Per-class and per-radius local neighbourhood support.</td></tr><tr><td><code>helix_context_class_pair_context.tif</code></td><td>Context optional</td><td>Ordered class-pair neighbourhood interactions.</td></tr><tr><td><code>helix_soft_targets.tif</code></td><td>UST</td><td>Per-class soft targets.</td></tr><tr><td><code>helix_uncertainty.tif</code></td><td>UST</td><td>Overall uncertainty.</td></tr><tr><td><code>helix_training_weights.tif</code></td><td>UST</td><td>Overall training weights.</td></tr><tr><td><code>helix_manifest.json</code></td><td>Export</td><td>Reproducibility manifest.</td></tr></table>
+
+<h2 id="faq">Troubleshooting</h2>
+<h3>QGIS shows mixed German and English labels</h3>
+<p>The plugin-owned labels are English. QGIS may still translate its own interface groups, such as the Advanced section, according to the QGIS application language.</p>
+<h3>I do not see a class-field dropdown</h3>
+<p>Select the label layer as <strong>Primary vector label layer</strong>. QGIS field menus are linked to that primary layer. Additional vector layers are still supported in the advanced section.</p>
+<h3>My classes are text values, not numbers</h3>
+<p>Run Preflight or Spatial directly. HELIX maps text values to integer IDs and writes the mapping to <code>helix_class_schema.csv</code> and <code>helix_class_schema.json</code>.</p>
+<h3>Should Spatial write confidence and uncertainty?</h3>
+<p>No. Spatial writes spatial alignment products. Context writes edge/neighbourhood risk. UST writes soft targets, uncertainty and weights.</p>
+<h3>Why not bilinear resampling for class labels?</h3>
+<p>Labels are categorical. Use nearest neighbour or mode/majority resampling for class labels.</p>
+</section>
+</main>
+</body>
+</html>

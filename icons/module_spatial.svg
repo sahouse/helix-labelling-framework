@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="HELIX Spatial reconstruction">
+  <rect x="4" y="4" width="120" height="120" rx="26" fill="#00876c"/>
+  <rect x="10" y="10" width="108" height="108" rx="22" fill="none" stroke="#d8fff5" stroke-width="3" opacity="0.75"/>
+  <g stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="24" y="24" width="58" height="58" rx="7"/>
+    <path d="M43 24v58M62 24v58M24 43h58M24 62h58"/>
+    <path d="M88 42l18 18-18 18"/>
+    <rect x="82" y="84" width="24" height="24" rx="4"/>
+  </g>
+  <path d="M34 92l12-10 14 10 12-10" stroke="#d8fff5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

@@ -1,0 +1,9 @@
+HELIX Labelling Framework 1.0.0
+
+For a clean local reinstall during development:
+
+1. Close QGIS.
+2. Remove older HELIX plugin folders from your QGIS profile, especially duplicate folders with previous HELIX names.
+3. Start QGIS again.
+4. Install this ZIP via Plugins → Manage and Install Plugins → Install from ZIP.
+5. Restart QGIS once after installation if Processing algorithms are not shown immediately.

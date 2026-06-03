@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="HELIX Export and report">
+  <rect x="4" y="4" width="120" height="120" rx="26" fill="#00876c"/>
+  <rect x="10" y="10" width="108" height="108" rx="22" fill="none" stroke="#d8fff5" stroke-width="3" opacity="0.75"/>
+  <g stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="29" y="23" width="54" height="82" rx="7"/>
+    <path d="M44 45h24M44 61h24M44 77h16"/>
+    <path d="M75 64h31"/>
+    <path d="M92 49l15 15-15 15"/>
+  </g>
+</svg>

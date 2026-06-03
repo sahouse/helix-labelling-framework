@@ -1,0 +1,20 @@
+[general]
+name=HELIX Labelling Framework
+qgisMinimumVersion=3.34
+qgisMaximumVersion=4.99
+description=Modular QGIS Processing framework for EO-grid labelling, temporal reconciliation, helical/context features, soft targets and ML-ready supervision.
+version=1.0.0
+author=Sarah Hauser (Karlsruhe Institute of Technology, KIT)
+email=sarah.hauser@kit.edu
+category=Raster
+icon=icon.png
+hasProcessingProvider=True
+experimental=False
+deprecated=False
+tags=HELIX,labelling,labels,label preprocessor,earth observation,remote sensing,raster,processing,soft targets,uncertainty,spatiotemporal
+homepage=https://github.com/sahouse/helix-labelling-framework#readme
+tracker=https://github.com/sahouse/helix-labelling-framework/issues
+repository=https://github.com/sahouse/helix-labelling-framework
+license=GPL-3.0-or-later
+changelog=1.0.0 - First stable release. Standardised publication metadata, licensing, README-based homepage, cross-platform notes, QGIS 4 metadata range, and dependency notes for QGIS/PyQGIS, GDAL and NumPy.
+about=HELIX Labelling Framework turns heterogeneous vector/raster EO labels into modular grid-aligned, time-aware, context-aware and uncertainty-aware supervision products for ML workflows. It provides QGIS Processing tools for preflight class schemas, spatial reconstruction to EO grids, temporal reconciliation, helical features, context/risk features, soft targets and export reports. Documentation is included in the docs folder and in the public repository README. Dependencies are QGIS/PyQGIS with GDAL and NumPy as provided by standard QGIS installations. The plugin is written in Python using the QGIS PyQt compatibility layer and is intended for Windows, Linux and macOS. Copyright (C) 2026 Sarah Hauser, Karlsruhe Institute of Technology (KIT).
