@@ -51,12 +51,6 @@ Detailed local documentation is also included under `docs/`:
 
 Required runtime components are QGIS/PyQGIS, GDAL and NumPy. These are normally included in standard QGIS installations on Windows, Linux and macOS. The plugin avoids hard-coded operating-system paths and uses the QGIS `qgis.PyQt` compatibility layer instead of direct PyQt5/PyQt6 imports.
 
-The metadata declares compatibility with QGIS 3.34+ and QGIS 4.x (`qgisMaximumVersion=4.99`). Before public upload, test installation and a small sample workflow in your target QGIS versions, especially QGIS 4, because QGIS 4 uses Qt 6.
-
-## Public repository without local Git
-
-A local Git command-line workflow is not required for publication, but the QGIS plugin repository requires a publicly accessible source-code repository and an issue tracker. You can create a GitHub or GitLab repository in the browser, upload the source files through the web interface, enable Issues, and then use the repository README as the plugin homepage. Do not use a repository that only contains the plugin ZIP.
-
 ## Support and issue reporting
 
 Please report issues through the repository issue tracker:
