@@ -62,6 +62,12 @@ https://github.com/sahouse/helix-labelling-framework/issues
 Author: Sarah Hauser, Karlsruhe Institute of Technology (KIT)  
 Contact: sarah.hauser@kit.edu
 
+If you use the HELIX Labelling Framework or build upon its concepts, please cite:
+
+Hauser, S.; Augner, L.; Schmitt, A. Perfect Labelling: A Review and Outlook of Label Optimization Techniques in Dynamic Earth Observation. *Remote Sensing* 2025, 17, 1246. https://doi.org/10.3390/rs17071246
+
+Hauser, S. Automated Feature and Label Refinement in the Context of Environmental Monitoring by Multi-Modal Satellite Data. PhD thesis, Karlsruhe Institute of Technology (KIT), 2025. https://doi.org/10.5445/IR/1000185980
+
 ## License
 
 This plugin is released under the GNU General Public License v3.0 or later.
