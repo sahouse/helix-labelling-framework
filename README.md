@@ -11,13 +11,13 @@ The framework helps convert vector or raster labels into products that can be us
 
 Core modules:
 
-1. **Preflight & class schema** — inspect label classes, create stable class IDs and prepare schema files.
-2. **Spatial reconstruction** — align vector/raster labels to an EO target grid.
-3. **Temporal reconciliation** — match labels to EO acquisition times using static, snapshot or validity-window logic.
-4. **Helical / wave features** — derive temporal and class-interaction features from label stacks.
-5. **Context & risk features** — build class-aware neighbourhood, purity and ambiguity indicators.
-6. **Soft targets & weights** — create uncertainty-aware supervision layers for ML training.
-7. **Export & report** — write ML-ready raster stacks and readable processing reports.
+1. **Preflight & class schema**:  inspect label classes, create stable class IDs and prepare schema files.
+2. **Spatial reconstruction**: align vector/raster labels to an EO target grid.
+3. **Temporal reconciliation**: match labels to EO acquisition times using static, snapshot or validity-window logic.
+4. **Helical / wave features**:  derive temporal and class-interaction features from label stacks.
+5. **Context & risk features**: build class-aware neighbourhood, purity and ambiguity indicators.
+6. **Soft targets & weights**: create uncertainty-aware supervision layers for ML training.
+7. **Export & report**: write ML-ready raster stacks and readable processing reports.
 
 ## Installation
 
